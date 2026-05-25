@@ -1,0 +1,29 @@
+.canvasWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+  aspect-ratio: 1;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.45);
+}
+
+.gameHost {
+  position: absolute;
+  inset: 0;
+}
+
+.gameHost :global(canvas) {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: manipulation;
+}
+
+@media (max-width: 520px) {
+  .canvasWrapper {
+    max-width: none;
+    border-radius: 20px;
+  }
+}

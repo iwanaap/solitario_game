@@ -1,0 +1,157 @@
+.wrapper {
+  min-height: calc(100vh - 72px);
+  display: grid;
+  align-items: center;
+}
+
+.resultPanel {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top, rgba(250, 204, 21, 0.14), transparent 28%),
+    rgba(30, 41, 59, 0.88);
+}
+
+.hero {
+  text-align: center;
+}
+
+.medal {
+  display: grid;
+  place-items: center;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 14px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #fef08a, #f59e0b 68%, #b45309 100%);
+  box-shadow:
+    0 16px 40px rgba(245, 158, 11, 0.3),
+    inset 0 3px 10px rgba(255, 255, 255, 0.35);
+  font-size: 3rem;
+  animation: medalFloat 2.8s ease-in-out infinite;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #93c5fd;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: #fde68a;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 1.8rem;
+}
+
+.starActive {
+  color: #facc15;
+  text-shadow: 0 0 18px rgba(250, 204, 21, 0.45);
+  animation: starPulse 1.2s ease-in-out infinite;
+}
+
+.starMuted {
+  color: rgba(203, 213, 225, 0.35);
+}
+
+.description {
+  margin: 28px auto 0;
+  max-width: 620px;
+  color: #cbd5e1;
+  font-size: 1.06rem;
+  text-align: center;
+}
+
+.summary {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 28px 0;
+}
+
+.summaryCard {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.34);
+  border: 1px solid rgba(147, 197, 253, 0.12);
+}
+
+.highlightCard {
+  background: linear-gradient(180deg, rgba(120, 53, 15, 0.85), rgba(120, 53, 15, 0.42));
+  border-color: rgba(250, 204, 21, 0.24);
+}
+
+.summaryCard span {
+  display: block;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.summaryCard strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.25rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@keyframes medalFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-8px) scale(1.03);
+  }
+}
+
+@keyframes starPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.14);
+  }
+}
+
+@media (max-width: 720px) {
+  .summary {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .medal {
+    width: 92px;
+    height: 92px;
+    font-size: 2.5rem;
+  }
+
+  .stars {
+    font-size: 1.5rem;
+  }
+}

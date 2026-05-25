@@ -1,0 +1,35 @@
+.hero {
+  min-height: calc(100vh - 72px);
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.kicker {
+  margin: 0;
+  color: #93c5fd;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  line-height: 0.95;
+}
+
+.description {
+  width: min(620px, 100%);
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 1.1rem;
+}
+
+.actions {
+  width: min(360px, 100%);
+  display: grid;
+  gap: 14px;
+}
