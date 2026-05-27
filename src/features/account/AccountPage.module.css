@@ -1,0 +1,278 @@
+.page {
+  display: grid;
+  gap: 18px;
+}
+
+.authCard,
+.profileGrid {
+  padding: clamp(18px, 4vw, 30px);
+}
+
+.profileGrid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 22px;
+}
+
+.avatarPanel {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 24px;
+  background: rgba(2, 6, 23, 0.28);
+}
+
+.avatarPanel img {
+  width: 128px;
+  height: 128px;
+  border: 3px solid rgba(254, 240, 138, 0.6);
+  border-radius: 28px;
+  object-fit: cover;
+  background: #0f172a;
+}
+
+.avatarPanel strong {
+  color: #fef08a;
+  font-size: 1.35rem;
+}
+
+.avatarPanel span {
+  color: #bfdbfe;
+  font-size: 0.86rem;
+  word-break: break-all;
+}
+
+.avatarPanel em {
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #0f172a;
+  background: #fef08a;
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.switcher {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 6px;
+  border-radius: 18px;
+  background: rgba(2, 6, 23, 0.28);
+}
+
+.switcher button {
+  border: 0;
+  border-radius: 14px;
+  padding: 12px;
+  color: #cbd5e1;
+  background: transparent;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.switcher .active {
+  color: #0f172a;
+  background: #fef08a;
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.form label {
+  display: grid;
+  gap: 7px;
+  color: #bfdbfe;
+  font-weight: 800;
+}
+
+.lockedFields {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(147, 197, 253, 0.18);
+  border-radius: 18px;
+  background: rgba(2, 6, 23, 0.18);
+}
+
+.lockedFields p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+}
+
+.lockedFields span {
+  color: #bfdbfe;
+  font-weight: 800;
+}
+
+.lockedFields strong {
+  color: #fef08a;
+  text-align: right;
+}
+
+.lockedFields small {
+  color: #93c5fd;
+  line-height: 1.35;
+}
+
+.avatarPicker {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid rgba(147, 197, 253, 0.18);
+  border-radius: 18px;
+  background: rgba(2, 6, 23, 0.18);
+}
+
+.avatarPicker legend {
+  padding: 0 6px;
+  color: #bfdbfe;
+  font-weight: 900;
+}
+
+.avatarOptions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(54px, 1fr));
+  gap: 10px;
+}
+
+.avatarOptions button {
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(147, 197, 253, 0.18);
+  border-radius: 16px;
+  padding: 6px;
+  background: rgba(15, 23, 42, 0.72);
+  cursor: pointer;
+}
+
+.avatarOptions img {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.avatarOptions .selectedAvatar {
+  border-color: #fef08a;
+  box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.14);
+}
+
+.form input {
+  width: 100%;
+  border: 1px solid rgba(147, 197, 253, 0.22);
+  border-radius: 16px;
+  padding: 13px 14px;
+  color: #f8fafc;
+  background: rgba(15, 23, 42, 0.72);
+  outline: none;
+}
+
+.form input:focus {
+  border-color: rgba(250, 204, 21, 0.7);
+  box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.12);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.recoverButton {
+  border: 0;
+  color: #bfdbfe;
+  background: transparent;
+  font-weight: 900;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.helpText {
+  margin: 0;
+  color: #dbeafe;
+  line-height: 1.45;
+}
+
+.demoCode {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(250, 204, 21, 0.28);
+  border-radius: 14px;
+  color: #fde68a;
+  background: rgba(120, 53, 15, 0.36);
+  font-weight: 800;
+}
+
+.demoCode strong {
+  color: #fff7ed;
+  letter-spacing: 0.16em;
+}
+
+.error {
+  margin: 0;
+  color: #fecaca;
+  font-weight: 800;
+}
+
+.savedOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.savedPopup {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  width: min(100%, 320px);
+  padding: 28px;
+  border-color: rgba(74, 222, 128, 0.34);
+  text-align: center;
+  animation: savedPop 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.savedPopup span {
+  font-size: 3rem;
+}
+
+.savedPopup strong {
+  color: #bbf7d0;
+  font-size: 1.35rem;
+}
+
+.savedPopup small {
+  color: #bfdbfe;
+}
+
+@keyframes savedPop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 720px) {
+  .profileGrid {
+    grid-template-columns: 1fr;
+  }
+}

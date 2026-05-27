@@ -1,9 +1,30 @@
 .pageShell {
+  position: relative;
   min-height: 100vh;
   padding: 24px 16px 48px;
+  overflow: hidden;
   background:
-    radial-gradient(circle at top, rgba(147, 197, 253, 0.14), transparent 32%),
-    linear-gradient(180deg, #0f172a 0%, #111827 100%);
+    linear-gradient(90deg, rgba(103, 232, 249, 0.035) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(250, 204, 21, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 18% 12%, rgba(251, 113, 133, 0.18), transparent 26%),
+    radial-gradient(circle at 84% 18%, rgba(103, 232, 249, 0.16), transparent 28%),
+    radial-gradient(circle at 50% 105%, rgba(250, 204, 21, 0.12), transparent 32%),
+    linear-gradient(180deg, #050816 0%, #081126 48%, #12091f 100%);
+  background-size: 34px 34px, 34px 34px, auto, auto, auto, auto;
+}
+
+.pageShell::before {
+  content: 'SOLITARIO';
+  position: fixed;
+  right: -24px;
+  bottom: 10px;
+  z-index: 0;
+  color: rgba(250, 204, 21, 0.045);
+  font-family: 'Courier New', monospace;
+  font-size: clamp(4rem, 16vw, 12rem);
+  font-weight: 900;
+  letter-spacing: -0.12em;
+  pointer-events: none;
 }
 
 .pageContent {

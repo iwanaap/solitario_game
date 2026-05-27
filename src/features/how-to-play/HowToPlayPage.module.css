@@ -3,9 +3,15 @@
 }
 
 .eyebrow {
+  width: fit-content;
   margin: 0 0 8px;
-  color: #93c5fd;
-  font-weight: 700;
+  padding: 5px 9px;
+  color: #050816;
+  background: #67e8f9;
+  border: 2px solid #fef08a;
+  box-shadow: 3px 3px 0 rgba(2, 6, 23, 0.85);
+  font-family: 'Courier New', monospace;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -33,8 +39,11 @@
   width: 68px;
   height: 68px;
   border-radius: 999px;
-  background: #facc15;
-  box-shadow: inset 0 0 0 4px rgba(254, 240, 138, 0.6);
+  background: radial-gradient(circle at 34% 28%, #fff7ad 0 18%, #facc15 19% 58%, #b45309 60% 100%);
+  box-shadow:
+    inset 0 -6px 0 rgba(113, 63, 18, 0.32),
+    5px 5px 0 rgba(2, 6, 23, 0.45),
+    0 0 18px rgba(250, 204, 21, 0.2);
 }
 
 .empty {

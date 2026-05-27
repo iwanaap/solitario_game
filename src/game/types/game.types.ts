@@ -1,10 +1,13 @@
 export type ScoreLabel =
+  | 'Perdiste'
   | 'Sigue intentando'
   | 'Bueno'
   | 'Genial'
   | 'Excelente!!'
   | 'WOOOOW!'
   | 'Acaso eres Dios? Increible!!!'
+
+export type GameOutcome = 'lost' | 'won'
 
 export interface Position {
   row: number
@@ -42,6 +45,7 @@ export interface GameProgress {
   remainingPieces: number
   score: number
   streak: number
+  lastMoveAt: number | null
   lastMoveScore: number
 }
 
@@ -51,6 +55,8 @@ export interface GameResult {
   remainingPieces: number
   moves: number
   score: number
+  durationMs: number
   evaluation: ScoreLabel
   perfect: boolean
+  outcome: GameOutcome
 }

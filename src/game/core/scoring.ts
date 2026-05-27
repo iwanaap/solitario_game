@@ -1,6 +1,6 @@
 import { CENTER_POSITION } from '../data/initialBoard'
 import { getCell } from './board'
-import type { Board, ScoreLabel } from '../types/game.types'
+import type { Board, GameOutcome, ScoreLabel } from '../types/game.types'
 
 export function getMoveScore(
   remainingPieces: number,
@@ -24,6 +24,10 @@ export function getMoveScore(
 }
 
 export function getScoreLabel(remainingPieces: number): ScoreLabel {
+  if (isLostResult(remainingPieces)) {
+    return 'Perdiste'
+  }
+
   switch (remainingPieces) {
     case 1:
       return 'Acaso eres Dios? Increible!!!'
@@ -42,6 +46,14 @@ export function getScoreLabel(remainingPieces: number): ScoreLabel {
 
 export function isWinningResult(remainingPieces: number): boolean {
   return remainingPieces <= 5
+}
+
+export function isLostResult(remainingPieces: number): boolean {
+  return remainingPieces >= 6
+}
+
+export function getGameOutcome(remainingPieces: number): GameOutcome {
+  return isLostResult(remainingPieces) ? 'lost' : 'won'
 }
 
 export function isPerfectResult(board: Board): boolean {

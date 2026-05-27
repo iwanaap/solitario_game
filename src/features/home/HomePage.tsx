@@ -6,22 +6,62 @@ export function HomePage() {
 
   return (
     <section className={styles.hero}>
-      <p className={styles.kicker}>Juego de tablero clásico</p>
-      <h1 className={styles.title}>El Solitario</h1>
-      <p className={styles.description}>
-        Salta fichas en horizontal o vertical y trata de terminar con una sola pieza en el centro.
-      </p>
+      <div className={styles.orbit} aria-hidden="true">
+        <span className={styles.orbitPiece} />
+        <span className={styles.orbitPiece} />
+        <span className={styles.orbitPiece} />
+      </div>
 
-      <div className={styles.actions}>
-        <button type="button" className="primaryButton" onClick={() => navigate('/game')}>
-          Iniciar partida
-        </button>
-        <button type="button" className="secondaryButton" onClick={() => navigate('/history')}>
-          Historial
-        </button>
-        <button type="button" className="secondaryButton" onClick={() => navigate('/how-to-play')}>
-          Cómo jugar
-        </button>
+      <div className={styles.copy}>
+        <p className={styles.kicker}>Juego de tablero clásico</p>
+        <h1 className={styles.title}>El Solitario</h1>
+        <p className={styles.description}>
+          Salta fichas, encadena rachas y resuelve el tablero antes de quedarte sin movimientos.
+        </p>
+
+        <div className={styles.actions}>
+          <button type="button" className={`primaryButton ${styles.startButton}`} onClick={() => navigate('/game')}>
+            <span>Iniciar partida</span>
+            <em>3 · 2 · 1 · ¡YA!</em>
+          </button>
+          <button type="button" className="secondaryButton" onClick={() => navigate('/history')}>
+            Historial
+          </button>
+          <button type="button" className="secondaryButton" onClick={() => navigate('/ranking')}>
+            Ranking
+          </button>
+          <button type="button" className="secondaryButton" onClick={() => navigate('/account')}>
+            Cuenta
+          </button>
+          <button type="button" className="secondaryButton" onClick={() => navigate('/settings')}>
+            Colores
+          </button>
+          <button type="button" className="secondaryButton" onClick={() => navigate('/how-to-play')}>
+            Cómo jugar
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.showcase} aria-hidden="true">
+        <div className={styles.boardGlow} />
+        <div className={styles.miniBoard}>
+          {Array.from({ length: 49 }, (_, index) => {
+            const row = Math.floor(index / 7)
+            const col = index % 7
+            const isCorner = (row < 2 || row > 4) && (col < 2 || col > 4)
+            const isCenter = row === 3 && col === 3
+            const isJumpPath = (row === 3 && col >= 1 && col <= 5) || (col === 3 && row >= 1 && row <= 5)
+
+            return (
+              <span
+                key={index}
+                className={`${styles.slot} ${isCorner ? styles.slotHidden : ''} ${isCenter ? styles.slotEmpty : ''} ${isJumpPath ? styles.slotPath : ''}`}
+              />
+            )
+          })}
+          <span className={`${styles.runnerPiece} ${styles.runnerOne}`} />
+          <span className={`${styles.runnerPiece} ${styles.runnerTwo}`} />
+        </div>
       </div>
     </section>
   )

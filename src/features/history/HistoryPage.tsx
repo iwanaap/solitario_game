@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { formatDuration } from '../../game/core/time'
 import { clearGameHistory, getGameHistory } from '../../storage/historyStorage'
 import type { StoredGameResult } from '../../storage/save.types'
 import styles from './HistoryPage.module.css'
@@ -57,6 +58,7 @@ export function HistoryPage() {
           <p className={styles.bestResult}>
             Mejor resultado histórico: <strong>{bestResult.remainingPieces}</strong> ficha(s),{' '}
             <strong>{bestResult.moves}</strong> movimientos, <strong>{bestResult.score}</strong> puntos,
+            {bestResult.durationMs !== undefined ? <> <strong>{formatDuration(bestResult.durationMs)}</strong>,</> : null}
             <strong> {bestResult.evaluation}</strong>.
           </p>
         ) : null}
@@ -75,6 +77,7 @@ export function HistoryPage() {
                   <li>Fichas restantes: {entry.remainingPieces}</li>
                   <li>Movimientos: {entry.moves}</li>
                   <li>Puntaje: {entry.score}</li>
+                  {entry.durationMs !== undefined ? <li>Tiempo: {formatDuration(entry.durationMs)}</li> : null}
                   <li>{entry.perfect ? 'Resultado perfecto' : 'Sin resultado perfecto'}</li>
                 </ul>
               </article>

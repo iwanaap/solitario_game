@@ -2,6 +2,7 @@ import { createInitialBoard } from './board'
 import { applyMove, getValidMoves } from './moves'
 import { countRemainingPieces, isGameOver } from './rules'
 import { getMoveScore } from './scoring'
+import { STREAK_WINDOW_MS } from './streak'
 import type { GameState, Move } from '../types/game.types'
 
 export function createInitialGameState(): GameState {
@@ -28,7 +29,7 @@ export function playMove(state: GameState, move: Move, playedAt: number): GameSt
   const moveWasApplied = board !== state.board
   const elapsedMs = state.lastMoveAt === null ? null : playedAt - state.lastMoveAt
   const streak =
-    moveWasApplied && elapsedMs !== null && elapsedMs <= 5000 ? state.streak + 1 : moveWasApplied ? 1 : state.streak
+    moveWasApplied && elapsedMs !== null && elapsedMs <= STREAK_WINDOW_MS ? state.streak + 1 : moveWasApplied ? 1 : state.streak
   const lastMoveScore = moveWasApplied ? getMoveScore(remainingPieces, elapsedMs, streak) : 0
 
   return {

@@ -1,73 +1,101 @@
-# React + TypeScript + Vite
+# El Solitario
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Juego web de **El Solitario / Peg Solitaire** con estética retro arcade, construido con React, TypeScript, Phaser 3, Vite y Capacitor.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js 22+
+- npm
+- Android Studio/JDK configurado (`JAVA_HOME`) si vas a abrir o compilar la app móvil Android
 
-## React Compiler
+## Instalación
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Desarrollo
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+Para probar desde otros dispositivos en la misma red:
+
+```bash
+npm run dev:network
+```
+
+## Calidad y build
+
+```bash
+npm run lint
+npm run test
+npm run build
+npm run preview
+```
+
+## Publicación / release
+
+La carpeta `release/` contiene material base para Google Play:
+
+- textos de ficha (`google-play-description.md`)
+- política de privacidad base (`privacy-policy.md`)
+- guía de Seguridad de datos (`data-safety-google-play.md`)
+- checklist (`release-checklist.md`)
+- instrucciones de build (`build-instructions.md`)
+- assets iniciales (`release/assets/`)
+
+Antes de publicar, reemplaza el email de contacto en la política de privacidad y publícala en una URL pública.
+
+## Android / Capacitor
+
+El proyecto ya incluye la plataforma Android en `android/` y usa el identificador:
+
+```txt
+com.negrura.elsolitario
+```
+
+Versión Android inicial:
+
+```txt
+versionCode 1
+versionName 1.0.0
+```
+
+Flujo recomendado después de cambios web:
+
+```bash
+npm run build
+npm run cap:sync
+npm run cap:android
+```
+
+Para compilar desde terminal necesitas Java/JDK disponible en `PATH` y `JAVA_HOME` configurado.
+
+## Arquitectura
+
+- `src/app/`: rutas y layout React.
+- `src/features/`: pantallas de la aplicación.
+- `src/game/core/`: reglas puras, movimientos, scoring, rachas y tiempo.
+- `src/game/phaser/`: tablero visual, animaciones, sonido y puente React ↔ Phaser.
+- `src/storage/`: persistencia local con `localStorage`.
+- `src/**/*.test.ts`: pruebas unitarias de reglas y storage.
+- `android/`: proyecto nativo generado por Capacitor.
+
+Consulta `PROJECT_STRUCTURE.md` para una descripción más detallada.
+
+## Persistencia y autenticación
+
+La app usa `localStorage` para:
+
+- historial de partidas
+- ranking local
+- sesión/cuenta demo
+- colores personalizados del tablero
+
+La autenticación es local/demo. Para producción debería reemplazarse por un proveedor real como Firebase Auth, Supabase Auth u otro backend.
+
+## Notas de rendimiento
+
+Phaser se carga con `React.lazy()` para no incluir el motor del juego en el bundle inicial. El chunk del tablero es grande por naturaleza del motor, por lo que Vite tiene ajustado el límite de advertencia de tamaño de chunk.

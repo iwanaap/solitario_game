@@ -8,8 +8,11 @@
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(circle at top, rgba(250, 204, 21, 0.14), transparent 28%),
-    rgba(30, 41, 59, 0.88);
+    linear-gradient(90deg, rgba(103, 232, 249, 0.05) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(250, 204, 21, 0.04) 1px, transparent 1px),
+    radial-gradient(circle at top, rgba(250, 204, 21, 0.18), transparent 28%),
+    rgba(8, 13, 32, 0.92);
+  background-size: 28px 28px, 28px 28px, auto, auto;
 }
 
 .hero {
@@ -32,9 +35,15 @@
 }
 
 .eyebrow {
-  margin: 0 0 10px;
-  color: #93c5fd;
-  font-weight: 700;
+  width: fit-content;
+  margin: 0 auto 10px;
+  padding: 5px 9px;
+  color: #050816;
+  background: #fef08a;
+  border: 2px solid #67e8f9;
+  box-shadow: 3px 3px 0 rgba(2, 6, 23, 0.85);
+  font-family: 'Courier New', monospace;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }
@@ -86,9 +95,10 @@
 
 .summaryCard {
   padding: 18px;
-  border-radius: 18px;
-  background: rgba(15, 23, 42, 0.34);
-  border: 1px solid rgba(147, 197, 253, 0.12);
+  border-radius: 14px;
+  background: rgba(5, 8, 22, 0.58);
+  border: 2px solid rgba(103, 232, 249, 0.2);
+  box-shadow: 5px 5px 0 rgba(2, 6, 23, 0.48);
 }
 
 .highlightCard {
