@@ -6,9 +6,7 @@ import { getValidMoves } from '../../game/core/moves'
 import { getGameOutcome, getScoreLabel, isPerfectResult } from '../../game/core/scoring'
 import { STREAK_WINDOW_MS } from '../../game/core/streak'
 import { formatDuration } from '../../game/core/time'
-import { getCurrentUser } from '../../storage/authStorage'
 import { saveGameResult } from '../../storage/historyStorage'
-import { saveRankingResult } from '../../storage/rankingStorage'
 import { getBoardTheme } from '../../storage/themeStorage'
 import type { GameProgress, GameResult } from '../../game/types/game.types'
 import styles from './GamePage.module.css'
@@ -193,11 +191,6 @@ export function GamePage() {
 
     finishedRef.current = true
     saveGameResult(result)
-
-    const currentUser = getCurrentUser()
-    if (currentUser) {
-      saveRankingResult(result, currentUser)
-    }
 
     setGameOverResult(result)
   }, [])

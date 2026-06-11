@@ -85,16 +85,14 @@ Para compilar desde terminal necesitas Java/JDK disponible en `PATH` y `JAVA_HOM
 
 Consulta `PROJECT_STRUCTURE.md` para una descripción más detallada.
 
-## Persistencia y autenticación
+## Persistencia local
 
 La app usa `localStorage` para:
 
 - historial de partidas
-- ranking local
-- sesión/cuenta demo
 - colores personalizados del tablero
 
-La autenticación es local/demo. Para producción debería reemplazarse por un proveedor real como Firebase Auth, Supabase Auth u otro backend.
+La versión 1.0 no incluye creación de cuenta, autenticación ni ranking para mantener el flujo simple y listo para producción.
 
 ## Notas de rendimiento
 

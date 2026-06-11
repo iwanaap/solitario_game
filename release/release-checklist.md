@@ -21,8 +21,6 @@
 - [ ] Sonido probado.
 - [ ] Vibración probada.
 - [ ] Historial probado.
-- [ ] Ranking local probado.
-- [ ] Cuenta demo local probada.
 - [ ] Personalización de colores probada.
 - [ ] App Bundle `.aab` generado y firmado.
 

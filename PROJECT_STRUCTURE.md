@@ -57,12 +57,10 @@ La arquitectura separa:
 │   ├── assets/
 │   │   └── hero.png
 │   ├── features/
-│   │   ├── account/
 │   │   ├── game/
 │   │   ├── history/
 │   │   ├── home/
 │   │   ├── how-to-play/
-│   │   ├── ranking/
 │   │   ├── results/
 │   │   └── settings/
 │   ├── game/
@@ -85,9 +83,7 @@ La arquitectura separa:
 │   │   │   └── scenes/
 │   │   └── types/
 │   ├── storage/
-│   │   ├── authStorage.ts
 │   │   ├── historyStorage.ts
-│   │   ├── rankingStorage.ts
 │   │   ├── save.types.ts
 │   │   ├── storage.test.ts
 │   │   └── themeStorage.ts
@@ -128,11 +124,9 @@ Configura la aplicación React.
 Contiene las pantallas funcionales de la app.
 
 - `home/`: menú principal retro arcade, hero animado, tablero decorativo móvil y accesos principales.
-- `account/`: cuenta local/demo con email, contraseña, país, avatar, recuperación con código temporal demo y popup de confirmación.
 - `game/`: pantalla de juego, cuenta regresiva, HUD, música retro, tema visual guardado, racha, modal de victoria/derrota y respaldo React para bloqueo sin movimientos.
 - `history/`: historial local de partidas, mejor resultado y limpieza del historial.
 - `how-to-play/`: explicación de reglas.
-- `ranking/`: ranking local asociado al usuario autenticado; conserva solo la mejor partida por jugador.
 - `results/`: pantalla final con medalla, estrellas y métricas.
 - `settings/`: laboratorio visual para personalizar colores del tablero, fichas, selección y movimientos válidos.
 
@@ -169,12 +163,10 @@ Tipos compartidos del dominio y del tema visual.
 ### `src/storage/`
 Persistencia local.
 
-- `authStorage.ts`: autenticación local/demo, sesión, perfiles y recuperación con código temporal.
 - `historyStorage.ts`: guardar, leer y limpiar historial.
-- `rankingStorage.ts`: ranking local, mejor resultado por jugador y ordenamiento.
 - `save.types.ts`: tipos de datos persistidos.
 - `themeStorage.ts`: guardar, leer y restaurar tema visual.
-- `storage.test.ts`: pruebas de cuenta demo, historial y ranking.
+- `storage.test.ts`: pruebas de historial local.
 
 ### `src/styles/`
 Estilos globales retro arcade: tipografía monoespaciada, botones pixelados, paneles luminosos y scanline global.
@@ -211,7 +203,7 @@ Material auxiliar para publicar en Google Play.
 7. El estado actualizado vuelve a React mediante callbacks.
 8. Si ya no hay movimientos, Phaser dispara el fin de juego; React también tiene una comprobación de respaldo.
 9. Con 6 o más fichas, el resultado es derrota; con 5 o menos, victoria.
-10. Al terminar se guarda el resultado en historial local y, si hay usuario activo, también en ranking local.
+10. Al terminar se guarda el resultado en historial local.
 11. Desde el modal se puede reintentar, volver al inicio o ver resultados cuando corresponde.
 
 ---
@@ -222,8 +214,7 @@ Material auxiliar para publicar en Google Play.
 - El README ya documenta instalación, desarrollo, build y flujo Android.
 - Los assets de plantilla de Vite/React fueron retirados; queda solo `hero.png` como asset interno usado por la app.
 - Phaser se carga en un chunk diferido. `vite.config.ts` ajusta `chunkSizeWarningLimit` para evitar warnings esperables por el peso del motor.
-- La autenticación sigue siendo local/demo con `localStorage`; para producción debe conectarse a Firebase Auth, Supabase Auth u otro backend real.
-- El ranking es local del dispositivo. Para ranking global real hace falta backend.
+- La versión 1.0 no incluye creación de cuenta, autenticación ni ranking para mantener una arquitectura local simple y lista para producción.
 - En móvil se reducen efectos costosos: cronómetro a 100ms, sin `backdrop-filter` en paneles y sin piezas flotantes decorativas.
 - La carpeta `release/` contiene textos, checklist y assets iniciales para Play Store.
 - Antes de publicar, reemplazar el email de contacto en `release/privacy-policy.md` y publicar esa política en una URL pública.

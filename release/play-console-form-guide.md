@@ -22,8 +22,7 @@ Si no agregas SDK de anuncios:
 
 ### Acceso a la app
 
-- Todas las funciones principales son accesibles sin credenciales externas.
-- La cuenta es local/demo dentro de la app.
+- Todas las funciones principales son accesibles sin credenciales.
 
 ### Público objetivo
 
@@ -51,7 +50,7 @@ Ver `release/data-safety-google-play.md`.
 
 ### Descripción corta
 
-Juego clásico de estrategia con estética retro arcade, rachas y ranking local.
+Juego clásico de estrategia con estética retro arcade, rachas e historial local.
 
 ### Capturas recomendadas
 
@@ -61,8 +60,7 @@ Mínimo sugerido:
 2. Tablero durante partida.
 3. Modal de victoria/derrota.
 4. Historial.
-5. Ranking.
-6. Personalización de colores.
+5. Personalización de colores.
 
 ### Gráficos incluidos
 

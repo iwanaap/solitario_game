@@ -6,7 +6,7 @@ El Solitario
 
 ## Descripción corta
 
-Juego clásico de estrategia con estética retro arcade, rachas y ranking local.
+Juego clásico de estrategia con estética retro arcade, rachas e historial local.
 
 ## Descripción completa
 
@@ -22,8 +22,6 @@ Salta fichas, reduce el tablero y busca terminar con la menor cantidad posible. 
 - Sistema de puntaje con bonificaciones por velocidad y racha.
 - Modal de victoria o derrota al quedarse sin movimientos.
 - Historial local de partidas.
-- Ranking local por jugador.
-- Cuenta local/demo con avatar y país.
 - Personalización de colores del tablero y fichas.
 - Diseñado para móvil con Capacitor.
 
@@ -35,7 +33,7 @@ Menos fichas restantes significa mejor resultado. ¿Puedes dejar solo una ficha 
 
 ### Privacidad
 
-La app funciona de manera local. El historial, ranking, cuenta demo y colores personalizados se guardan en el dispositivo mediante almacenamiento local.
+La app funciona de manera local. El historial y los colores personalizados se guardan en el dispositivo mediante almacenamiento local.
 
 ## Notas de versión 1.0.0
 
@@ -43,8 +41,6 @@ Primera versión pública de El Solitario:
 
 - Juego completo de Peg Solitaire.
 - Historial local.
-- Ranking local.
-- Cuenta demo local.
 - Personalización visual.
 - Optimización móvil Android.
 

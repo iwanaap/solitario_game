@@ -17,26 +17,21 @@ La app sí guarda datos localmente en el dispositivo mediante `localStorage`, pe
 
 ## Datos guardados localmente
 
-- Email de cuenta demo local.
-- Nombre visible.
-- País.
-- Avatar elegido.
 - Historial de partidas.
-- Ranking local.
 - Colores personalizados.
 
 Uso:
 
 - Funcionalidad de la app.
 - Personalización.
-- Historial/ranking local.
+- Historial local.
 
 ## Seguridad de datos
 
 Si Play Console pregunta por eliminación de datos:
 
 - El usuario puede borrar historial desde la pantalla Historial.
-- El usuario puede cerrar sesión desde Cuenta.
+- El usuario puede borrar los colores personalizados restaurando el tema visual desde la pantalla Colores.
 - El usuario puede borrar todos los datos eliminando almacenamiento/datos de la app desde Android.
 
 ## Publicidad
@@ -62,7 +57,7 @@ Permiso actual detectado:
 Motivo:
 
 - WebView/Capacitor.
-- Posible carga de recursos externos, como avatares predeterminados.
+- Base técnica de Capacitor/WebView.
 
 ## Si agregas Firebase/Supabase/Analytics en el futuro
 
@@ -71,4 +66,4 @@ Deberás actualizar:
 - política de privacidad;
 - formulario de Seguridad de datos;
 - descripción de datos recopilados;
-- posibilidad de eliminación de cuenta/datos.
+- posibilidad de eliminación de datos.

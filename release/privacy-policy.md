@@ -13,10 +13,7 @@ El Solitario es un juego de estrategia que funciona principalmente de forma loca
 La aplicación puede guardar localmente en el dispositivo:
 
 - historial de partidas;
-- puntajes y ranking local;
-- configuración de colores del tablero;
-- perfil local/demo del jugador, como email, nombre visible, país y avatar seleccionado;
-- código temporal demo para recuperación de contraseña local.
+- configuración de colores del tablero.
 
 Estos datos se usan únicamente para permitir el funcionamiento de la app y mejorar la experiencia del jugador dentro del mismo dispositivo.
 
@@ -28,15 +25,11 @@ Los datos se guardan usando almacenamiento local del dispositivo. Si el usuario 
 
 El Solitario no vende ni comparte datos personales con terceros.
 
-La versión actual no utiliza un backend propio para cuentas, ranking global o analítica.
+La versión actual no utiliza cuentas, ranking global, backend propio ni analítica.
 
 ## Conexión a internet
 
-La app puede requerir permiso de internet por la base técnica de Capacitor/WebView y para cargar recursos externos si se usan, por ejemplo avatares predeterminados desde servicios externos. La funcionalidad principal del juego no depende de un servidor propio.
-
-## Seguridad
-
-La cuenta incluida en la aplicación es una cuenta local/demo. No debe usarse como sistema de autenticación sensible. Para una versión con cuentas reales se recomienda integrar un proveedor de autenticación seguro.
+La app puede requerir permiso de internet por la base técnica de Capacitor/WebView. La funcionalidad principal del juego no depende de un servidor propio.
 
 ## Menores de edad
 

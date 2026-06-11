@@ -200,65 +200,6 @@
   outline: 3px solid rgba(74, 222, 128, 0.16);
 }
 
-.runnerPiece {
-  position: absolute;
-  width: 9.4%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle at 34% 28%, #fff7ad 0 18%, #facc15 19% 58%, #b45309 60% 100%);
-  box-shadow: 0 16px 20px rgba(2, 6, 23, 0.34);
-  pointer-events: none;
-}
-
-.runnerOne {
-  left: 44.9%;
-  top: 16.8%;
-  animation: jumpDown 3s cubic-bezier(0.7, 0, 0.25, 1) infinite;
-}
-
-.runnerTwo {
-  left: 17.3%;
-  top: 44.7%;
-  animation: jumpSide 3.4s 0.7s cubic-bezier(0.7, 0, 0.25, 1) infinite;
-}
-
-.orbit {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.orbitPiece {
-  position: absolute;
-  width: 18px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #facc15;
-  box-shadow: 0 0 24px rgba(250, 204, 21, 0.72);
-  opacity: 0.82;
-  animation: orbitMove 12s linear infinite;
-}
-
-.orbitPiece:nth-child(1) {
-  left: 8%;
-  top: 18%;
-}
-
-.orbitPiece:nth-child(2) {
-  left: 48%;
-  top: 8%;
-  animation-duration: 15s;
-  animation-delay: -4s;
-}
-
-.orbitPiece:nth-child(3) {
-  right: 8%;
-  bottom: 18%;
-  animation-duration: 18s;
-  animation-delay: -8s;
-}
-
 @keyframes revealUp {
   from {
     opacity: 0;
@@ -306,38 +247,6 @@
   }
 }
 
-@keyframes jumpDown {
-  0%,
-  28%,
-  100% {
-    transform: translateY(0) scale(1);
-  }
-
-  45% {
-    transform: translateY(60%) scale(1.08);
-  }
-
-  62% {
-    transform: translateY(160%) scale(1);
-  }
-}
-
-@keyframes jumpSide {
-  0%,
-  34%,
-  100% {
-    transform: translateX(0) scale(1);
-  }
-
-  52% {
-    transform: translateX(74%) translateY(-18%) scale(1.08);
-  }
-
-  70% {
-    transform: translateX(178%) scale(1);
-  }
-}
-
 @keyframes boardFloatMobile {
   0%,
   100% {
@@ -346,16 +255,6 @@
 
   50% {
     transform: rotateX(9deg) rotateZ(-2deg) translateY(-8px);
-  }
-}
-
-@keyframes orbitMove {
-  from {
-    transform: rotate(0deg) translateX(22px) rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg) translateX(22px) rotate(-360deg);
   }
 }
 
@@ -391,8 +290,6 @@
   .boardGlow,
   .miniBoard,
   .slot,
-  .runnerPiece,
-  .orbitPiece,
   .startButton::before {
     animation: none;
   }
@@ -476,22 +373,5 @@
     border-radius: 26px;
     transform: rotateX(7deg) rotateZ(-4deg);
     animation: boardFloatMobile 4.8s ease-in-out infinite;
-  }
-
-  .runnerPiece {
-    display: block;
-    width: 9.2%;
-  }
-
-  .runnerOne {
-    animation: jumpDown 3.2s cubic-bezier(0.7, 0, 0.25, 1) infinite;
-  }
-
-  .runnerTwo {
-    display: none;
-  }
-
-  .orbitPiece {
-    display: none;
   }
 }

@@ -6,12 +6,6 @@ export function HomePage() {
 
   return (
     <section className={styles.hero}>
-      <div className={styles.orbit} aria-hidden="true">
-        <span className={styles.orbitPiece} />
-        <span className={styles.orbitPiece} />
-        <span className={styles.orbitPiece} />
-      </div>
-
       <div className={styles.copy}>
         <p className={styles.kicker}>Juego de tablero clásico</p>
         <h1 className={styles.title}>El Solitario</h1>
@@ -26,12 +20,6 @@ export function HomePage() {
           </button>
           <button type="button" className="secondaryButton" onClick={() => navigate('/history')}>
             Historial
-          </button>
-          <button type="button" className="secondaryButton" onClick={() => navigate('/ranking')}>
-            Ranking
-          </button>
-          <button type="button" className="secondaryButton" onClick={() => navigate('/account')}>
-            Cuenta
           </button>
           <button type="button" className="secondaryButton" onClick={() => navigate('/settings')}>
             Colores
@@ -59,8 +47,6 @@ export function HomePage() {
               />
             )
           })}
-          <span className={`${styles.runnerPiece} ${styles.runnerOne}`} />
-          <span className={`${styles.runnerPiece} ${styles.runnerTwo}`} />
         </div>
       </div>
     </section>
