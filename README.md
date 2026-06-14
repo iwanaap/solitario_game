@@ -1,6 +1,18 @@
 # El Solitario
 
-Juego web de **El Solitario / Peg Solitaire** con estética retro arcade, construido con React, TypeScript, Phaser 3, Vite y Capacitor.
+Juego web de **El Solitario / Peg Solitaire** con estética retro arcade, construido con React, TypeScript, Phaser 3 y Vite.
+
+## Demo en línea
+
+El juego está funcionando en:
+
+https://solitario.l-lab.cl
+
+## Contacto
+
+Instagram de L-Lab:
+
+https://www.instagram.com/l.lab.cl
 
 ## Requisitos
 
@@ -50,7 +62,9 @@ Antes de publicar, reemplaza el email de contacto en la política de privacidad 
 
 ## Android / Capacitor
 
-El proyecto ya incluye la plataforma Android en `android/` y usa el identificador:
+El proyecto incluye una base Android generada con Capacitor en `android/`. Esta integración está iniciada, pero debe validarse y completarse para publicación final en Google Play.
+
+Identificador configurado:
 
 ```txt
 com.negrura.elsolitario
@@ -63,7 +77,7 @@ versionCode 1
 versionName 1.0.0
 ```
 
-Flujo recomendado después de cambios web:
+Flujo recomendado después de cambios web, cuando se trabaje la versión Android:
 
 ```bash
 npm run build

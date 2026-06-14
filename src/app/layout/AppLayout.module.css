@@ -48,6 +48,17 @@
   font-weight: 700;
   letter-spacing: 0.03em;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.footerLinks {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 }
 
 .footer a {
