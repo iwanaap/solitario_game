@@ -3,38 +3,47 @@
   isolation: isolate;
   min-height: calc(100vh - 72px);
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(300px, 0.78fr);
   align-items: center;
-  gap: clamp(24px, 6vw, 76px);
   overflow: hidden;
+  border-radius: 30px;
+  padding: clamp(24px, 7vw, 76px);
+  box-shadow: 0 28px 90px rgba(2, 6, 23, 0.42);
+}
+
+.heroVideo {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
 }
 
 .hero::before,
 .hero::after {
   content: '';
   position: absolute;
-  z-index: -2;
-  border-radius: 999px;
-  filter: blur(10px);
-  opacity: 0.72;
+  inset: 0;
+  pointer-events: none;
 }
 
 .hero::before {
-  width: 44vw;
-  height: 44vw;
-  left: -18vw;
-  top: 8%;
-  background: radial-gradient(circle, rgba(250, 204, 21, 0.18), transparent 64%);
-  animation: driftGlow 9s ease-in-out infinite alternate;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(5, 8, 22, 0.9) 0%, rgba(5, 8, 22, 0.62) 42%, rgba(5, 8, 22, 0.2) 100%),
+    radial-gradient(circle at 24% 20%, rgba(250, 204, 21, 0.2), transparent 32%),
+    radial-gradient(circle at 80% 72%, rgba(103, 232, 249, 0.16), transparent 34%);
 }
 
 .hero::after {
-  width: 38vw;
-  height: 38vw;
-  right: -14vw;
-  bottom: -12vw;
-  background: radial-gradient(circle, rgba(96, 165, 250, 0.22), transparent 66%);
-  animation: driftGlow 11s ease-in-out infinite alternate-reverse;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(103, 232, 249, 0.06) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(250, 204, 21, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.72) 45%, transparent 100%);
 }
 
 .copy {
@@ -84,6 +93,7 @@
   border-left: 4px solid #facc15;
   color: #dbeafe;
   font-size: clamp(1.05rem, 2vw, 1.3rem);
+  text-shadow: 0 2px 10px rgba(2, 6, 23, 0.74);
   animation: revealUp 720ms 160ms ease-out both;
 }
 
@@ -126,78 +136,144 @@
   text-transform: uppercase;
 }
 
-.showcase {
+.donateButton {
   position: relative;
+  width: 100%;
+  min-height: 56px;
+  padding: 16px 20px;
+  overflow: hidden;
+  border: 2px solid #fef08a;
+  border-radius: 10px;
+  color: #fff7ed;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(254, 240, 138, 0.52), transparent 28%),
+    linear-gradient(135deg, #9f1239 0%, #be123c 48%, #7f1d1d 100%);
+  box-shadow:
+    4px 4px 0 rgba(2, 6, 23, 0.9),
+    0 0 24px rgba(251, 113, 133, 0.28);
+  font-family: 'Courier New', monospace;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    transform 0.16s steps(2, end),
+    box-shadow 0.16s steps(2, end);
+}
+
+.donateButton::after {
+  content: '♥';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  color: #fef08a;
+  font-size: 1.2rem;
+  transform: translateY(-50%);
+  text-shadow: 0 0 14px rgba(254, 240, 138, 0.72);
+}
+
+.donateButton:hover {
+  transform: translate(-2px, -2px);
+}
+
+.donateButton:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(2, 6, 23, 0.9);
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
   display: grid;
   place-items: center;
-  min-height: min(74vh, 620px);
-  perspective: 900px;
+  padding: 20px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(250, 204, 21, 0.18), transparent 32%),
+    rgba(2, 6, 23, 0.78);
+  backdrop-filter: blur(8px);
+  animation: fadeIn 160ms ease-out both;
 }
 
-.boardGlow {
+.donationModal {
+  position: relative;
+  width: min(480px, 100%);
+  padding: clamp(24px, 6vw, 38px);
+  border: 3px solid #fef08a;
+  border-radius: 18px;
+  color: #f8fafc;
+  background:
+    linear-gradient(135deg, rgba(103, 232, 249, 0.08) 0 16%, transparent 16% 100%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(7, 13, 34, 0.98));
+  box-shadow:
+    8px 8px 0 rgba(2, 6, 23, 0.84),
+    0 0 42px rgba(250, 204, 21, 0.24);
+  text-align: center;
+  animation: popIn 220ms cubic-bezier(0.2, 1.2, 0.4, 1) both;
+}
+
+.donationModal::before {
+  content: '';
   position: absolute;
-  width: min(72vw, 520px);
-  aspect-ratio: 1;
-  border-radius: 36%;
-  background:
-    radial-gradient(circle at 42% 32%, rgba(250, 204, 21, 0.32), transparent 24%),
-    radial-gradient(circle at 58% 60%, rgba(14, 165, 233, 0.32), transparent 38%);
-  filter: blur(28px);
-  animation: breathe 3.8s ease-in-out infinite;
+  inset: 10px;
+  border: 1px dashed rgba(103, 232, 249, 0.28);
+  border-radius: 12px;
+  pointer-events: none;
 }
 
-.miniBoard {
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  border: 2px solid rgba(254, 240, 138, 0.7);
+  border-radius: 9px;
+  color: #fef08a;
+  background: rgba(2, 6, 23, 0.72);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.modalKicker {
+  margin: 0 0 10px;
+  color: #67e8f9;
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.modalTitle {
+  margin: 0;
+  color: #fef08a;
+  font-size: clamp(1.7rem, 6vw, 2.35rem);
+  line-height: 1.05;
+}
+
+.modalText {
+  margin: 18px 0 24px;
+  color: #dbeafe;
+}
+
+.donationLink {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: clamp(8px, 1.4vw, 13px);
-  width: min(76vw, 500px);
-  aspect-ratio: 1;
-  padding: clamp(18px, 4vw, 34px);
-  border: 7px solid rgba(191, 228, 255, 0.34);
-  border-radius: clamp(28px, 6vw, 54px);
-  background:
-    linear-gradient(135deg, rgba(37, 99, 235, 0.94), rgba(29, 78, 216, 0.98)),
-    radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.22), transparent 26%);
-  box-shadow:
-    0 32px 80px rgba(2, 6, 23, 0.42),
-    inset 0 0 0 3px rgba(255, 255, 255, 0.08);
-  transform: rotateX(9deg) rotateZ(-4deg);
-  animation: boardFloat 4.4s ease-in-out infinite;
-}
-
-.slot {
-  position: relative;
-  border-radius: 50%;
-  background: radial-gradient(circle at 34% 28%, #fef08a 0 18%, #facc15 19% 54%, #ca8a04 56% 100%);
-  box-shadow:
-    inset 0 -5px 0 rgba(113, 63, 18, 0.32),
-    0 8px 12px rgba(2, 6, 23, 0.22);
-  animation: pieceTwinkle 3.6s ease-in-out infinite;
-  animation-delay: calc(var(--slot-delay, 0) * 80ms);
-}
-
-.slot:nth-child(3n) {
-  --slot-delay: 1;
-}
-
-.slot:nth-child(4n) {
-  --slot-delay: 2;
-}
-
-.slotHidden {
-  visibility: hidden;
-}
-
-.slotEmpty {
-  background: radial-gradient(circle, #082f6b 0 48%, #0f3c90 50% 100%);
-  box-shadow:
-    inset 0 8px 18px rgba(2, 6, 23, 0.42),
-    0 2px 0 rgba(255, 255, 255, 0.08);
-}
-
-.slotPath {
-  outline: 3px solid rgba(74, 222, 128, 0.16);
+  z-index: 1;
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+  padding: 15px 18px;
+  border: 2px solid #fff7ed;
+  border-radius: 10px;
+  color: #082f49;
+  background: linear-gradient(180deg, #fff7ad 0%, #facc15 58%, #ca8a04 100%);
+  box-shadow: 4px 4px 0 #7c2d12;
+  font-family: 'Courier New', monospace;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 @keyframes revealUp {
@@ -209,62 +285,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes boardFloat {
-  0%,
-  100% {
-    transform: rotateX(9deg) rotateZ(-4deg) translateY(0);
-  }
-
-  50% {
-    transform: rotateX(12deg) rotateZ(-2deg) translateY(-14px);
-  }
-}
-
-@keyframes breathe {
-  0%,
-  100% {
-    opacity: 0.58;
-    transform: scale(0.96);
-  }
-
-  50% {
-    opacity: 0.92;
-    transform: scale(1.06);
-  }
-}
-
-@keyframes pieceTwinkle {
-  0%,
-  100% {
-    filter: brightness(1);
-  }
-
-  50% {
-    filter: brightness(1.14);
-  }
-}
-
-@keyframes boardFloatMobile {
-  0%,
-  100% {
-    transform: rotateX(7deg) rotateZ(-4deg) translateY(0);
-  }
-
-  50% {
-    transform: rotateX(9deg) rotateZ(-2deg) translateY(-8px);
-  }
-}
-
-@keyframes driftGlow {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-
-  to {
-    transform: translate3d(34px, -22px, 0) scale(1.08);
   }
 }
 
@@ -280,26 +300,44 @@
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .hero::before,
-  .hero::after,
   .kicker,
   .title,
   .description,
   .actions,
-  .boardGlow,
-  .miniBoard,
-  .slot,
-  .startButton::before {
+  .startButton::before,
+  .modalBackdrop,
+  .donationModal {
     animation: none;
   }
 }
 
 @media (max-width: 860px) {
   .hero {
-    grid-template-columns: 1fr;
-    align-content: start;
-    padding-top: 16px;
+    min-height: calc(100vh - 48px);
+    align-content: center;
   }
 
   .copy {
@@ -312,22 +350,25 @@
     max-width: 100%;
   }
 
-  .showcase {
-    min-height: auto;
+  .description {
+    padding-left: 0;
+    padding-top: 12px;
+    border-left: 0;
+    border-top: 4px solid #facc15;
   }
 
-  .miniBoard {
-    width: min(76vw, 320px);
-    border-width: 5px;
+  .hero::before {
+    background:
+      linear-gradient(180deg, rgba(5, 8, 22, 0.86) 0%, rgba(5, 8, 22, 0.58) 54%, rgba(5, 8, 22, 0.86) 100%),
+      radial-gradient(circle at 50% 20%, rgba(250, 204, 21, 0.18), transparent 38%);
   }
 }
 
 @media (max-width: 520px) {
   .hero {
     min-height: calc(100dvh - 30px);
-    align-content: center;
-    gap: 14px;
-    overflow: visible;
+    padding: 22px 14px;
+    border-radius: 22px;
   }
 
   .copy {
@@ -350,28 +391,12 @@
     gap: 10px;
   }
 
-  .showcase {
-    position: relative;
-    order: -1;
-    z-index: 0;
-    width: 100%;
-    min-height: 212px;
-    opacity: 1;
-    transform: none;
+  .donateButton {
+    padding-inline: 14px 34px;
+    font-size: 0.86rem;
   }
 
-  .boardGlow {
-    width: 214px;
-    filter: blur(18px);
-  }
-
-  .miniBoard {
-    width: 214px;
-    gap: 6px;
+  .modalBackdrop {
     padding: 14px;
-    border-width: 4px;
-    border-radius: 26px;
-    transform: rotateX(7deg) rotateZ(-4deg);
-    animation: boardFloatMobile 4.8s ease-in-out infinite;
   }
 }

@@ -74,6 +74,7 @@ export function HistoryPage() {
                   <p>{formatDate(entry.date)}</p>
                 </div>
                 <ul>
+                  {entry.playerName ? <li>Jugador: {entry.playerName}</li> : null}
                   <li>Fichas restantes: {entry.remainingPieces}</li>
                   <li>Movimientos: {entry.moves}</li>
                   <li>Puntaje: {entry.score}</li>

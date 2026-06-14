@@ -7,6 +7,13 @@ export function AppLayout() {
       <div className={styles.pageContent}>
         <Outlet />
       </div>
+      <footer className={styles.footer}>
+        Creado por{' '}
+        <a href="https://l-lab.cl" target="_blank" rel="noreferrer">
+          l-lab.cl
+        </a>{' '}
+        2026 - Desarrollo web y Aplicaciones a Medida
+      </footer>
     </div>
   )
 }

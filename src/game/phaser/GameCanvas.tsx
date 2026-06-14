@@ -9,11 +9,12 @@ interface GameCanvasProps {
   canvasKey: number
   onStateChange: (progress: GameProgress) => void
   onGameOver: (result: GameResult) => void
+  onReady: () => void
   getStartedAt: () => number
   theme: BoardTheme
 }
 
-export function GameCanvas({ canvasKey, onStateChange, onGameOver, getStartedAt, theme }: GameCanvasProps) {
+export function GameCanvas({ canvasKey, onStateChange, onGameOver, onReady, getStartedAt, theme }: GameCanvasProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -22,13 +23,13 @@ export function GameCanvas({ canvasKey, onStateChange, onGameOver, getStartedAt,
     }
 
     const game = new Phaser.Game(
-      createPhaserConfig(containerRef.current, { onStateChange, onGameOver, getStartedAt, theme }),
+      createPhaserConfig(containerRef.current, { onStateChange, onGameOver, onReady, getStartedAt, theme }),
     )
 
     return () => {
       game.destroy(true)
     }
-  }, [canvasKey, getStartedAt, onGameOver, onStateChange, theme])
+  }, [canvasKey, getStartedAt, onGameOver, onReady, onStateChange, theme])
 
   return (
     <div className={styles.canvasWrapper}>

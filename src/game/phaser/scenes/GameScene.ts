@@ -10,6 +10,7 @@ import { DEFAULT_BOARD_THEME, hexToPhaserColor, type BoardTheme } from '../../ty
 interface SceneCallbacks {
   onStateChange: (progress: GameProgress) => void
   onGameOver: (result: GameResult) => void
+  onReady: () => void
   getStartedAt: () => number
 }
 
@@ -61,6 +62,9 @@ export class GameScene extends Phaser.Scene {
     this.syncBoardVisuals()
     this.emitState()
     this.game.events.emit('ui:set-hint', 'Selecciona una ficha amarilla')
+    this.game.events.once('postrender', () => {
+      this.callbacks.onReady()
+    })
   }
 
   private drawBackground(): void {

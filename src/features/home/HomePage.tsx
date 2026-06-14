@@ -1,11 +1,19 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './HomePage.module.css'
 
+const donationUrl = 'https://link.mercadopago.cl/elsolitariojuego'
+
 export function HomePage() {
   const navigate = useNavigate()
+  const [isDonationOpen, setIsDonationOpen] = useState(false)
 
   return (
     <section className={styles.hero}>
+      <video className={styles.heroVideo} autoPlay muted loop playsInline preload="auto" aria-hidden="true">
+        <source src="/fondo.mp4" type="video/mp4" />
+      </video>
+
       <div className={styles.copy}>
         <p className={styles.kicker}>Juego de tablero clásico</p>
         <h1 className={styles.title}>El Solitario</h1>
@@ -21,34 +29,51 @@ export function HomePage() {
           <button type="button" className="secondaryButton" onClick={() => navigate('/history')}>
             Historial
           </button>
+          <button type="button" className="secondaryButton" onClick={() => navigate('/ranking')}>
+            Ranking semanal
+          </button>
           <button type="button" className="secondaryButton" onClick={() => navigate('/settings')}>
             Colores
           </button>
           <button type="button" className="secondaryButton" onClick={() => navigate('/how-to-play')}>
             Cómo jugar
           </button>
+          <button type="button" className={styles.donateButton} onClick={() => setIsDonationOpen(true)}>
+            Dona! apoya este proyecto
+          </button>
         </div>
       </div>
 
-      <div className={styles.showcase} aria-hidden="true">
-        <div className={styles.boardGlow} />
-        <div className={styles.miniBoard}>
-          {Array.from({ length: 49 }, (_, index) => {
-            const row = Math.floor(index / 7)
-            const col = index % 7
-            const isCorner = (row < 2 || row > 4) && (col < 2 || col > 4)
-            const isCenter = row === 3 && col === 3
-            const isJumpPath = (row === 3 && col >= 1 && col <= 5) || (col === 3 && row >= 1 && row <= 5)
-
-            return (
-              <span
-                key={index}
-                className={`${styles.slot} ${isCorner ? styles.slotHidden : ''} ${isCenter ? styles.slotEmpty : ''} ${isJumpPath ? styles.slotPath : ''}`}
-              />
-            )
-          })}
+      {isDonationOpen ? (
+        <div className={styles.modalBackdrop} role="presentation" onClick={() => setIsDonationOpen(false)}>
+          <div
+            className={styles.donationModal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="donation-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className={styles.closeButton}
+              aria-label="Cerrar mensaje de donación"
+              onClick={() => setIsDonationOpen(false)}
+            >
+              ×
+            </button>
+            <p className={styles.modalKicker}>Apoyo al proyecto</p>
+            <h2 id="donation-title" className={styles.modalTitle}>
+              ¡Gracias por querer apoyar El Solitario!
+            </h2>
+            <p className={styles.modalText}>
+              Tu donación ayuda a mantener y mejorar este juego. Puedes gestionarla de forma segura en Mercado Pago.
+            </p>
+            <a className={styles.donationLink} href={donationUrl} target="_blank" rel="noreferrer">
+              Gestionar donación
+            </a>
+          </div>
         </div>
-      </div>
+      ) : null}
     </section>
   )
 }

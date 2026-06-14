@@ -8,6 +8,7 @@ import type { BoardTheme } from '../types/theme.types'
 interface SceneCallbacks {
   onStateChange: (progress: GameProgress) => void
   onGameOver: (result: GameResult) => void
+  onReady: () => void
   getStartedAt: () => number
   theme: BoardTheme
 }

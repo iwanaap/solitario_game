@@ -7,6 +7,7 @@ export interface StoredGameResult {
   moves: number
   score: number
   durationMs?: number
+  playerName?: string
   evaluation: ScoreLabel
   perfect: boolean
   outcome?: GameOutcome

@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createInitialGameState } from '../../game/core/gameState'
 import { createGameId } from '../../game/core/id'
@@ -7,6 +7,7 @@ import { getGameOutcome, getScoreLabel, isPerfectResult } from '../../game/core/
 import { STREAK_WINDOW_MS } from '../../game/core/streak'
 import { formatDuration } from '../../game/core/time'
 import { saveGameResult } from '../../storage/historyStorage'
+import { getCurrentPlayerName, registerPlayer } from '../../storage/playerStorage'
 import { getBoardTheme } from '../../storage/themeStorage'
 import type { GameProgress, GameResult } from '../../game/types/game.types'
 import styles from './GamePage.module.css'
@@ -33,6 +34,10 @@ export function GamePage() {
   const [countdownStep, setCountdownStep] = useState(0)
   const [elapsedMs, setElapsedMs] = useState(0)
   const [gameOverResult, setGameOverResult] = useState<GameResult | null>(null)
+  const [isBoardReady, setIsBoardReady] = useState(false)
+  const [playerName, setPlayerName] = useState<string | null>(() => getCurrentPlayerName())
+  const [playerNameInput, setPlayerNameInput] = useState('')
+  const [playerNameError, setPlayerNameError] = useState('')
   const [isMusicEnabled, setIsMusicEnabled] = useState(false)
   const [boardTheme, setBoardTheme] = useState(() => getBoardTheme())
   const [progress, setProgress] = useState<GameProgress>({
@@ -132,7 +137,7 @@ export function GamePage() {
   }, [stopRetroMusic])
 
   useEffect(() => {
-    if (gameOverResult || countdownStep >= COUNTDOWN_LABELS.length) {
+    if (!playerName || !isBoardReady || gameOverResult || countdownStep >= COUNTDOWN_LABELS.length) {
       return
     }
 
@@ -154,7 +159,7 @@ export function GamePage() {
     return () => {
       window.clearTimeout(timeoutId)
     }
-  }, [countdownStep, gameOverResult])
+  }, [countdownStep, gameOverResult, isBoardReady, playerName])
 
   useEffect(() => {
     if (gameOverResult || countdownStep < COUNTDOWN_LABELS.length) {
@@ -212,6 +217,7 @@ export function GamePage() {
         moves: nextProgress.moveCount,
         score: nextProgress.score,
         durationMs: Math.max(0, Date.now() - getStartedAt()),
+        playerName: playerName ?? undefined,
         evaluation: getScoreLabel(nextProgress.remainingPieces),
         perfect: isPerfectResult(nextProgress.board),
         outcome: getGameOutcome(nextProgress.remainingPieces),
@@ -219,12 +225,29 @@ export function GamePage() {
 
       finishWithResult(result)
     },
-    [finishWithResult, getStartedAt],
+    [finishWithResult, getStartedAt, playerName],
   )
 
   const handleGameOver = useCallback((result: GameResult) => {
-    finishWithResult(result)
-  }, [finishWithResult])
+    finishWithResult({ ...result, playerName: playerName ?? undefined })
+  }, [finishWithResult, playerName])
+
+  const handleBoardReady = useCallback(() => {
+    setIsBoardReady(true)
+  }, [])
+
+  const handlePlayerNameSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setPlayerNameError('')
+
+    try {
+      const registeredPlayer = await registerPlayer(playerNameInput)
+      setPlayerName(registeredPlayer.name)
+      setPlayerNameInput('')
+    } catch (error) {
+      setPlayerNameError(error instanceof Error ? error.message : 'No se pudo registrar el nombre.')
+    }
+  }
 
   const handleRestart = () => {
     finishedRef.current = false
@@ -233,6 +256,7 @@ export function GamePage() {
     setStartedAtMs(0)
     setCountdownStep(0)
     setElapsedMs(0)
+    setIsBoardReady(false)
     setBoardTheme(getBoardTheme())
     const resetState = createInitialGameState()
     setProgress({
@@ -301,13 +325,36 @@ export function GamePage() {
             canvasKey={canvasKey}
             onStateChange={handleStateChange}
             onGameOver={handleGameOver}
+            onReady={handleBoardReady}
             getStartedAt={getStartedAt}
             theme={boardTheme}
           />
         </Suspense>
       </div>
 
-      {countdownLabel ? (
+      {!playerName && !gameOverResult ? (
+        <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="player-name-title">
+          <form className={`panel ${styles.playerModal}`} onSubmit={handlePlayerNameSubmit}>
+            <p className={styles.eyebrow}>Primer ingreso</p>
+            <h2 id="player-name-title" className={styles.modalTitle}>Elige tu nombre</h2>
+            <p className={styles.modalText}>Este nombre se usará para registrar tus jugadas y participar del ranking semanal.</p>
+            <input
+              className={styles.nameInput}
+              value={playerNameInput}
+              onChange={(event) => setPlayerNameInput(event.target.value)}
+              placeholder="Tu nombre"
+              maxLength={24}
+              autoFocus
+            />
+            {playerNameError ? <p className={styles.inputError}>{playerNameError}</p> : null}
+            <button type="submit" className="primaryButton">Guardar nombre</button>
+          </form>
+        </div>
+      ) : !isBoardReady && !gameOverResult ? (
+        <div className={styles.modalOverlay} role="status" aria-live="polite">
+          <div className={styles.loadingPopup}>Preparando tablero…</div>
+        </div>
+      ) : countdownLabel ? (
         <div className={styles.modalOverlay} role="status" aria-live="polite">
           <div className={styles.countdownPopup}>{countdownLabel}</div>
         </div>

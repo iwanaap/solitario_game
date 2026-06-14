@@ -58,7 +58,8 @@ export function ResultsPage() {
         </div>
 
         <p className={styles.description}>
-          Terminaste con <strong>{result.remainingPieces}</strong> ficha(s), <strong>{result.moves}</strong>{' '}
+          {result.playerName ? <><strong>{result.playerName}</strong>, </> : null}
+          terminaste con <strong>{result.remainingPieces}</strong> ficha(s), <strong>{result.moves}</strong>{' '}
           movimientos, <strong>{result.score}</strong> puntos y <strong>{formatDuration(result.durationMs)}</strong>.
         </p>
 
@@ -88,6 +89,9 @@ export function ResultsPage() {
         <div className={styles.actions}>
           <button type="button" className="primaryButton" onClick={() => navigate('/game')}>
             Jugar de nuevo
+          </button>
+          <button type="button" className="secondaryButton" onClick={() => navigate('/ranking')}>
+            Ver ranking
           </button>
           <button type="button" className="secondaryButton" onClick={() => navigate('/')}>
             Volver al inicio
