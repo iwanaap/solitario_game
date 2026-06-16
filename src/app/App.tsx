@@ -1,11 +1,14 @@
 import { HashRouter } from 'react-router-dom'
+import { AuthProvider } from '../auth/AuthProvider'
 import { AppRoutes } from './routes'
 
 function App() {
   return (
-    <HashRouter>
-      <AppRoutes />
-    </HashRouter>
+    <AuthProvider>
+      <HashRouter>
+        <AppRoutes />
+      </HashRouter>
+    </AuthProvider>
   )
 }
 

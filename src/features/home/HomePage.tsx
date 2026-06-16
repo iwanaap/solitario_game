@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../auth/authContext'
 import styles from './HomePage.module.css'
 
 const donationUrl = 'https://link.mercadopago.cl/elsolitariojuego'
 
 export function HomePage() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [isDonationOpen, setIsDonationOpen] = useState(false)
 
   return (
@@ -29,8 +31,23 @@ export function HomePage() {
           <button type="button" className="secondaryButton" onClick={() => navigate('/history')}>
             Historial
           </button>
+          {!user ? (
+            <button type="button" className="secondaryButton" onClick={() => navigate('/auth')}>
+              Entrar / crear cuenta
+            </button>
+          ) : (
+            <button type="button" className="secondaryButton" onClick={() => navigate('/profile')}>
+              Mi perfil
+            </button>
+          )}
+          <button type="button" className="secondaryButton" onClick={() => navigate('/challenges')}>
+            Desafíos diarios
+          </button>
+          <button type="button" className="secondaryButton" onClick={() => navigate('/shop')}>
+            Tienda de avatares
+          </button>
           <button type="button" className="secondaryButton" onClick={() => navigate('/ranking')}>
-            Ranking semanal
+            Ranking
           </button>
           <button type="button" className="secondaryButton" onClick={() => navigate('/settings')}>
             Colores

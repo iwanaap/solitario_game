@@ -42,6 +42,17 @@
   color: #cbd5e1;
 }
 
+.sections {
+  display: grid;
+  gap: 28px;
+}
+
+.sectionTitle {
+  margin: 0 0 14px;
+  color: #fef3c7;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+}
+
 .empty {
   margin: 0;
   padding: 28px;
@@ -71,6 +82,16 @@
 .item:first-child {
   border-color: rgba(250, 204, 21, 0.46);
   background: linear-gradient(135deg, rgba(120, 53, 15, 0.72), rgba(14, 116, 144, 0.2));
+}
+
+.avatar {
+  width: 58px;
+  height: 58px;
+  padding: 5px;
+  border: 2px solid rgba(250, 204, 21, 0.28);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.5);
+  image-rendering: pixelated;
 }
 
 .rank {
@@ -134,12 +155,12 @@
   }
 
   .item {
-    grid-template-columns: 58px 1fr;
+    grid-template-columns: 58px 58px 1fr;
   }
 
   .scoreBlock,
   .stats {
-    grid-column: 2;
+    grid-column: 3;
     min-width: 0;
     text-align: left;
   }

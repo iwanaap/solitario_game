@@ -27,6 +27,95 @@
   pointer-events: none;
 }
 
+.accountBar {
+  position: relative;
+  z-index: 2;
+  width: min(1080px, 100%);
+  margin: 0 auto 16px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 2px solid rgba(103, 232, 249, 0.2);
+  border-radius: 14px;
+  background: rgba(5, 8, 22, 0.7);
+  box-shadow: 4px 4px 0 rgba(2, 6, 23, 0.5);
+  font-family: 'Courier New', monospace;
+}
+
+.brandButton,
+.accountButton {
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.brandButton {
+  padding: 9px 10px;
+  color: #fef08a;
+  background: transparent;
+}
+
+.accountActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.accountStatus {
+  overflow: hidden;
+  color: rgba(226, 232, 240, 0.82);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profileButton {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid rgba(103, 232, 249, 0.24);
+  border-radius: 12px;
+  color: rgba(226, 232, 240, 0.9);
+  background: rgba(2, 6, 23, 0.32);
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.profileButton img {
+  width: 34px;
+  height: 34px;
+  image-rendering: pixelated;
+}
+
+.profileButton span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accountButton {
+  flex: 0 0 auto;
+  padding: 9px 12px;
+  color: #082f49;
+  background: var(--retro-gold);
+  box-shadow: 2px 2px 0 rgba(124, 45, 18, 0.9);
+}
+
+.accountButton:hover,
+.brandButton:hover {
+  color: #67e8f9;
+}
+
 .pageContent {
   width: min(1080px, 100%);
   margin: 0 auto;
@@ -75,5 +164,15 @@
 @media (max-width: 520px) {
   .pageShell {
     padding: 10px 8px 20px;
+  }
+
+  .accountBar {
+    align-items: stretch;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+
+  .accountActions {
+    justify-content: space-between;
   }
 }

@@ -4,6 +4,18 @@ import { isSupabaseConfigured, supabaseRequest } from './supabaseClient'
 
 const WEEKLY_RANKING_KEY = 'el-solitario-weekly-ranking'
 
+export interface GlobalRankingEntry {
+  id: string
+  playerName: string
+  avatarId: string
+  rankingPoints: number
+  totalScore: number
+  totalGames: number
+  totalWins: number
+  perfectGames: number
+  bestScore: number
+}
+
 export interface WeeklyRankingEntry {
   playerName: string
   score: number
@@ -19,6 +31,19 @@ export interface WeeklyRankingEntry {
 interface WeeklyRankingSave {
   weekStart: string
   entries: WeeklyRankingEntry[]
+}
+
+interface GlobalRankingRow {
+  id: string
+  username: string | null
+  display_name: string | null
+  avatar_id: string
+  ranking_points: number
+  total_score: number
+  total_games: number
+  total_wins: number
+  perfect_games: number
+  best_score: number
 }
 
 interface WeeklyRankingRow {
@@ -97,6 +122,28 @@ export function getWeeklyRanking(): WeeklyRankingEntry[] {
   const ranking = readWeeklyRanking()
   writeWeeklyRanking(ranking)
   return sortRanking(ranking.entries)
+}
+
+export async function getGlobalCombinedRanking(): Promise<GlobalRankingEntry[]> {
+  if (!isSupabaseConfigured()) {
+    return []
+  }
+
+  const rows = await supabaseRequest<GlobalRankingRow[]>(
+    'profiles?select=id,username,display_name,avatar_id,ranking_points,total_score,total_games,total_wins,perfect_games,best_score&order=ranking_points.desc,total_score.desc,total_games.desc&limit=100',
+  )
+
+  return rows.map((row) => ({
+    id: row.id,
+    playerName: row.display_name ?? row.username ?? 'Jugador sin nombre',
+    avatarId: row.avatar_id,
+    rankingPoints: row.ranking_points,
+    totalScore: row.total_score,
+    totalGames: row.total_games,
+    totalWins: row.total_wins,
+    perfectGames: row.perfect_games,
+    bestScore: row.best_score,
+  }))
 }
 
 export async function getGlobalWeeklyRanking(): Promise<WeeklyRankingEntry[]> {

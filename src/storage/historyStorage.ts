@@ -1,5 +1,6 @@
 import type { GameResult } from '../game/types/game.types'
 import type { StoredGameResult } from './save.types'
+import { saveAuthenticatedGameResult } from './accountGameStorage'
 import { saveGlobalRankingResult, saveWeeklyRankingResult } from './rankingStorage'
 
 const STORAGE_KEY = 'el-solitario-history'
@@ -10,6 +11,7 @@ export function saveGameResult(result: GameResult): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextHistory))
   saveWeeklyRankingResult(result)
   void saveGlobalRankingResult(result)
+  void saveAuthenticatedGameResult(result)
 }
 
 export function getGameHistory(): StoredGameResult[] {

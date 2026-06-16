@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { formatDuration } from '../../game/core/time'
-import { getGlobalWeeklyRanking, getWeekStartIso, type WeeklyRankingEntry } from '../../storage/rankingStorage'
+import {
+  getGlobalCombinedRanking,
+  getGlobalWeeklyRanking,
+  getWeekStartIso,
+  type GlobalRankingEntry,
+  type WeeklyRankingEntry,
+} from '../../storage/rankingStorage'
 import styles from './RankingPage.module.css'
 
 function formatWeekStart(weekStart: string): string {
@@ -22,6 +28,7 @@ function getMedal(index: number): string {
 export function RankingPage() {
   const navigate = useNavigate()
   const [ranking, setRanking] = useState<WeeklyRankingEntry[]>([])
+  const [globalRanking, setGlobalRanking] = useState<GlobalRankingEntry[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
   const weekStart = useMemo(() => getWeekStartIso(), [])
@@ -29,10 +36,11 @@ export function RankingPage() {
   useEffect(() => {
     let isMounted = true
 
-    getGlobalWeeklyRanking()
-      .then((entries) => {
+    Promise.all([getGlobalWeeklyRanking(), getGlobalCombinedRanking()])
+      .then(([weeklyEntries, globalEntries]) => {
         if (isMounted) {
-          setRanking(entries)
+          setRanking(weeklyEntries)
+          setGlobalRanking(globalEntries)
         }
       })
       .catch(() => {
@@ -56,9 +64,9 @@ export function RankingPage() {
       <div className={`panel ${styles.panel}`}>
         <div className={styles.header}>
           <div>
-            <p className={styles.eyebrow}>Se reinicia cada lunes 00:00</p>
-            <h1 className={styles.title}>Ranking semanal</h1>
-            <p className={styles.week}>Semana iniciada el {formatWeekStart(weekStart)}</p>
+            <p className={styles.eyebrow}>Puntos combinados + mejores partidas</p>
+            <h1 className={styles.title}>Ranking</h1>
+            <p className={styles.week}>Semanal desde {formatWeekStart(weekStart)}</p>
           </div>
 
           <button type="button" className="secondaryButton" onClick={() => navigate('/')}>
@@ -67,31 +75,67 @@ export function RankingPage() {
         </div>
 
         {isLoading ? (
-          <p className={styles.empty}>Cargando ranking global…</p>
+          <p className={styles.empty}>Cargando rankings…</p>
         ) : error ? (
           <p className={styles.empty}>{error}</p>
-        ) : ranking.length === 0 ? (
-          <p className={styles.empty}>Todavía no hay puntajes esta semana.</p>
         ) : (
-          <div className={styles.list}>
-            {ranking.map((entry, index) => (
-              <article key={entry.playerName} className={styles.item}>
-                <div className={styles.rank}>{getMedal(index)}</div>
-                <div className={styles.playerInfo}>
-                  <h2>{entry.playerName}</h2>
-                  <p>{entry.evaluation} · {formatDate(entry.date)}</p>
+          <div className={styles.sections}>
+            <section>
+              <h2 className={styles.sectionTitle}>Ranking global combinado</h2>
+              {globalRanking.length === 0 ? (
+                <p className={styles.empty}>Inicia sesión y termina partidas para aparecer aquí.</p>
+              ) : (
+                <div className={styles.list}>
+                  {globalRanking.map((entry, index) => (
+                    <article key={entry.id} className={styles.item}>
+                      <div className={styles.rank}>{getMedal(index)}</div>
+                      <img className={styles.avatar} src={`/avatars/${entry.avatarId}.svg`} alt="" />
+                      <div className={styles.playerInfo}>
+                        <h2>{entry.playerName}</h2>
+                        <p>{entry.totalGames} partida(s)</p>
+                      </div>
+                      <div className={styles.scoreBlock}>
+                        <span>Ranking</span>
+                        <strong>{entry.rankingPoints}</strong>
+                      </div>
+                      <ul className={styles.stats}>
+                        <li>{entry.totalScore} puntos total</li>
+                        <li>{entry.totalWins} victoria(s)</li>
+                        <li>{entry.perfectGames} perfecta(s)</li>
+                      </ul>
+                    </article>
+                  ))}
                 </div>
-                <div className={styles.scoreBlock}>
-                  <span>Puntaje</span>
-                  <strong>{entry.score}</strong>
+              )}
+            </section>
+
+            <section>
+              <h2 className={styles.sectionTitle}>Mejores partidas de la semana</h2>
+              {ranking.length === 0 ? (
+                <p className={styles.empty}>Todavía no hay puntajes esta semana.</p>
+              ) : (
+                <div className={styles.list}>
+                  {ranking.map((entry, index) => (
+                    <article key={entry.playerName} className={styles.item}>
+                      <div className={styles.rank}>{getMedal(index)}</div>
+                      <div className={styles.playerInfo}>
+                        <h2>{entry.playerName}</h2>
+                        <p>{entry.evaluation} · {formatDate(entry.date)}</p>
+                      </div>
+                      <div className={styles.scoreBlock}>
+                        <span>Puntaje</span>
+                        <strong>{entry.score}</strong>
+                      </div>
+                      <ul className={styles.stats}>
+                        <li>{entry.remainingPieces} ficha(s)</li>
+                        <li>{entry.moves} movs.</li>
+                        <li>{formatDuration(entry.durationMs)}</li>
+                      </ul>
+                    </article>
+                  ))}
                 </div>
-                <ul className={styles.stats}>
-                  <li>{entry.remainingPieces} ficha(s)</li>
-                  <li>{entry.moves} movs.</li>
-                  <li>{formatDuration(entry.durationMs)}</li>
-                </ul>
-              </article>
-            ))}
+              )}
+            </section>
           </div>
         )}
       </div>

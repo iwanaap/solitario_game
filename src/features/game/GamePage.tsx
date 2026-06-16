@@ -1,5 +1,6 @@
-import { Suspense, lazy, useCallback, useEffect, useRef, useState, type FormEvent } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../auth/authContext'
 import { createInitialGameState } from '../../game/core/gameState'
 import { createGameId } from '../../game/core/id'
 import { getValidMoves } from '../../game/core/moves'
@@ -7,7 +8,7 @@ import { getGameOutcome, getScoreLabel, isPerfectResult } from '../../game/core/
 import { STREAK_WINDOW_MS } from '../../game/core/streak'
 import { formatDuration } from '../../game/core/time'
 import { saveGameResult } from '../../storage/historyStorage'
-import { getCurrentPlayerName, registerPlayer } from '../../storage/playerStorage'
+import { getCurrentPlayerName } from '../../storage/playerStorage'
 import { getBoardTheme } from '../../storage/themeStorage'
 import type { GameProgress, GameResult } from '../../game/types/game.types'
 import styles from './GamePage.module.css'
@@ -23,6 +24,7 @@ const RETRO_BASS = [130.81, 130.81, 174.61, 174.61, 146.83, 146.83, 196, 196] as
 
 export function GamePage() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const finishedRef = useRef(false)
   const musicContextRef = useRef<AudioContext | null>(null)
   const musicGainRef = useRef<GainNode | null>(null)
@@ -35,9 +37,13 @@ export function GamePage() {
   const [elapsedMs, setElapsedMs] = useState(0)
   const [gameOverResult, setGameOverResult] = useState<GameResult | null>(null)
   const [isBoardReady, setIsBoardReady] = useState(false)
-  const [playerName, setPlayerName] = useState<string | null>(() => getCurrentPlayerName())
-  const [playerNameInput, setPlayerNameInput] = useState('')
-  const [playerNameError, setPlayerNameError] = useState('')
+  const playerName = useMemo(() => {
+    if (typeof user?.user_metadata.name === 'string') {
+      return user.user_metadata.name
+    }
+
+    return user?.email ?? getCurrentPlayerName()
+  }, [user])
   const [isMusicEnabled, setIsMusicEnabled] = useState(false)
   const [boardTheme, setBoardTheme] = useState(() => getBoardTheme())
   const [progress, setProgress] = useState<GameProgress>({
@@ -137,7 +143,7 @@ export function GamePage() {
   }, [stopRetroMusic])
 
   useEffect(() => {
-    if (!playerName || !isBoardReady || gameOverResult || countdownStep >= COUNTDOWN_LABELS.length) {
+    if (!isBoardReady || gameOverResult || countdownStep >= COUNTDOWN_LABELS.length) {
       return
     }
 
@@ -159,7 +165,7 @@ export function GamePage() {
     return () => {
       window.clearTimeout(timeoutId)
     }
-  }, [countdownStep, gameOverResult, isBoardReady, playerName])
+  }, [countdownStep, gameOverResult, isBoardReady])
 
   useEffect(() => {
     if (gameOverResult || countdownStep < COUNTDOWN_LABELS.length) {
@@ -235,19 +241,6 @@ export function GamePage() {
   const handleBoardReady = useCallback(() => {
     setIsBoardReady(true)
   }, [])
-
-  const handlePlayerNameSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setPlayerNameError('')
-
-    try {
-      const registeredPlayer = await registerPlayer(playerNameInput)
-      setPlayerName(registeredPlayer.name)
-      setPlayerNameInput('')
-    } catch (error) {
-      setPlayerNameError(error instanceof Error ? error.message : 'No se pudo registrar el nombre.')
-    }
-  }
 
   const handleRestart = () => {
     finishedRef.current = false
@@ -332,25 +325,7 @@ export function GamePage() {
         </Suspense>
       </div>
 
-      {!playerName && !gameOverResult ? (
-        <div className={styles.modalOverlay} role="dialog" aria-modal="true" aria-labelledby="player-name-title">
-          <form className={`panel ${styles.playerModal}`} onSubmit={handlePlayerNameSubmit}>
-            <p className={styles.eyebrow}>Primer ingreso</p>
-            <h2 id="player-name-title" className={styles.modalTitle}>Elige tu nombre</h2>
-            <p className={styles.modalText}>Este nombre se usará para registrar tus jugadas y participar del ranking semanal.</p>
-            <input
-              className={styles.nameInput}
-              value={playerNameInput}
-              onChange={(event) => setPlayerNameInput(event.target.value)}
-              placeholder="Tu nombre"
-              maxLength={24}
-              autoFocus
-            />
-            {playerNameError ? <p className={styles.inputError}>{playerNameError}</p> : null}
-            <button type="submit" className="primaryButton">Guardar nombre</button>
-          </form>
-        </div>
-      ) : !isBoardReady && !gameOverResult ? (
+      {!isBoardReady && !gameOverResult ? (
         <div className={styles.modalOverlay} role="status" aria-live="polite">
           <div className={styles.loadingPopup}>Preparando tablero…</div>
         </div>

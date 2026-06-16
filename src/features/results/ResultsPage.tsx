@@ -1,4 +1,5 @@
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../auth/authContext'
 import type { GameResult } from '../../game/types/game.types'
 import { isWinningResult } from '../../game/core/scoring'
 import { formatDuration } from '../../game/core/time'
@@ -31,6 +32,7 @@ function getMedal(result: GameResult): { emoji: string; title: string; stars: nu
 export function ResultsPage() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { user } = useAuth()
   const result = location.state as GameResult | null
 
   if (!result) {
@@ -87,8 +89,16 @@ export function ResultsPage() {
         </div>
 
         <div className={styles.actions}>
-          <button type="button" className="primaryButton" onClick={() => navigate('/game')}>
+          {!user ? (
+            <button type="button" className="primaryButton" onClick={() => navigate('/auth')}>
+              Guardar ranking y ganar fichas
+            </button>
+          ) : null}
+          <button type="button" className={user ? 'primaryButton' : 'secondaryButton'} onClick={() => navigate('/game')}>
             Jugar de nuevo
+          </button>
+          <button type="button" className="secondaryButton" onClick={() => navigate('/challenges')}>
+            Ver desafíos
           </button>
           <button type="button" className="secondaryButton" onClick={() => navigate('/ranking')}>
             Ver ranking

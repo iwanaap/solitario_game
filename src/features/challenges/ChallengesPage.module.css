@@ -1,0 +1,249 @@
+.wrapper {
+  min-height: calc(100vh - 130px);
+  display: grid;
+  align-items: center;
+  padding: 18px 0;
+}
+
+.panel {
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(250, 204, 21, 0.2), transparent 25%),
+    radial-gradient(circle at 92% 10%, rgba(251, 113, 133, 0.16), transparent 28%),
+    rgba(8, 13, 32, 0.94);
+}
+
+.header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.header button {
+  width: auto;
+  min-width: 150px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--retro-cyan);
+  font-family: 'Courier New', monospace;
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: #fef08a;
+  font-size: clamp(2.2rem, 7vw, 4.7rem);
+  line-height: 0.92;
+  text-shadow: 4px 4px 0 #7f1d1d;
+}
+
+.subtitle {
+  max-width: 58ch;
+  margin: 12px 0 0;
+  color: rgba(226, 232, 240, 0.84);
+}
+
+.loginBox,
+.empty,
+.error,
+.success {
+  position: relative;
+  z-index: 1;
+  border-radius: 18px;
+  font-family: 'Courier New', monospace;
+  font-weight: 800;
+}
+
+.loginBox {
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border: 2px dashed rgba(250, 204, 21, 0.4);
+  color: #fef3c7;
+  background: rgba(113, 63, 18, 0.25);
+}
+
+.loginBox p {
+  margin: 0;
+  color: rgba(226, 232, 240, 0.82);
+}
+
+.empty,
+.error,
+.success {
+  margin: 0;
+  padding: 18px;
+  text-align: center;
+}
+
+.empty {
+  border: 2px dashed rgba(103, 232, 249, 0.24);
+  color: #dbeafe;
+}
+
+.error {
+  margin-bottom: 16px;
+  color: #fecdd3;
+  background: rgba(127, 29, 29, 0.45);
+  border: 1px solid rgba(251, 113, 133, 0.42);
+}
+
+.success {
+  margin-bottom: 16px;
+  color: #bbf7d0;
+  background: rgba(20, 83, 45, 0.44);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+}
+
+.summary {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.summary article {
+  padding: 16px;
+  border: 2px solid rgba(103, 232, 249, 0.18);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.42);
+  box-shadow: 4px 4px 0 rgba(2, 6, 23, 0.35);
+}
+
+.summary span {
+  display: block;
+  color: #93c5fd;
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.summary strong {
+  display: block;
+  margin-top: 6px;
+  color: #fef08a;
+  font-family: 'Courier New', monospace;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 2px solid rgba(103, 232, 249, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(5, 8, 22, 0.75), rgba(14, 116, 144, 0.16));
+  box-shadow: 5px 5px 0 rgba(2, 6, 23, 0.42);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.icon {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.55);
+  font-size: 1.8rem;
+}
+
+.reward {
+  padding: 8px 10px;
+  border: 1px solid rgba(250, 204, 21, 0.36);
+  border-radius: 999px;
+  color: #fef08a;
+  background: rgba(113, 63, 18, 0.32);
+  font-family: 'Courier New', monospace;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.card h2 {
+  min-height: 2.4em;
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1.2rem;
+  line-height: 1.05;
+}
+
+.card p {
+  flex: 1;
+  margin: 0;
+  color: rgba(226, 232, 240, 0.82);
+  font-size: 0.92rem;
+}
+
+.progressTrack {
+  height: 14px;
+  overflow: hidden;
+  border: 2px solid rgba(103, 232, 249, 0.24);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.72);
+}
+
+.progressTrack span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #facc15, #67e8f9);
+  box-shadow: 0 0 16px rgba(103, 232, 249, 0.38);
+}
+
+.progressLabel {
+  color: #dbeafe;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.card button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.7);
+  opacity: 0.55;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .header,
+  .summary {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .header button {
+    width: 100%;
+  }
+}

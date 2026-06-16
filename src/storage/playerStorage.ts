@@ -128,10 +128,10 @@ export async function registerPlayer(name: string): Promise<CurrentPlayer> {
     }
 
     if (error instanceof SupabaseRequestError && error.code === '23505') {
-      throw new Error('Ese nombre ya existe. Elige otro.')
+      throw new Error('Ese nombre ya existe. Elige otro.', { cause: error })
     }
 
-    throw new Error('No se pudo registrar el nombre. Revisa la conexión e intenta de nuevo.')
+    throw new Error('No se pudo registrar el nombre. Revisa la conexión e intenta de nuevo.', { cause: error })
   }
 }
 
