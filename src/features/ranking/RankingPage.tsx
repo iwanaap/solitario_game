@@ -87,7 +87,7 @@ export function RankingPage() {
               ) : (
                 <div className={styles.list}>
                   {globalRanking.map((entry, index) => (
-                    <article key={entry.id} className={styles.item}>
+                    <article key={entry.id} className={`${styles.item} ${styles.globalItem}`}>
                       <div className={styles.rank}>{getMedal(index)}</div>
                       <img className={styles.avatar} src={`/avatars/${entry.avatarId}.svg`} alt="" />
                       <div className={styles.playerInfo}>

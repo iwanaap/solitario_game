@@ -75,10 +75,15 @@ as $$
 begin
   insert into public.daily_challenges (challenge_date, challenge_type, target_value, reward_chips, title, description)
   values
-    (p_date, 'play_games', 3, 50, 'Calienta motores', 'Juega 3 partidas durante el día.'),
-    (p_date, 'max_remaining_pieces', 5, 100, 'Final limpio', 'Termina una partida con 5 fichas restantes o menos.'),
-    (p_date, 'finish_under_time', 300, 150, 'Contra el reloj', 'Termina una partida ganada en menos de 5 minutos.')
-  on conflict (challenge_date, challenge_type) do nothing;
+    (p_date, 'play_games', 3, 30, 'Calienta motores', 'Juega 3 partidas durante el día.'),
+    (p_date, 'max_remaining_pieces', 2, 30, 'Final limpio', 'Termina 2 partidas con exactamente 3 fichas restantes.'),
+    (p_date, 'finish_under_time', 5, 30, 'Contra el reloj', 'Gana 5 partidas en menos de 50 segundos cada una.')
+  on conflict (challenge_date, challenge_type) do update
+  set
+    target_value = excluded.target_value,
+    reward_chips = excluded.reward_chips,
+    title = excluded.title,
+    description = excluded.description;
 end;
 $$;
 
@@ -132,32 +137,35 @@ begin
 
   update public.user_daily_challenge_progress progress
   set
-    progress = case
-      when progress.progress = 0 then p_remaining_pieces
-      else least(progress.progress, p_remaining_pieces)
-    end,
-    completed = true,
-    completed_at = coalesce(progress.completed_at, now())
+    progress = progress.progress + 1,
+    completed = case when progress.progress + 1 >= challenge.target_value then true else progress.completed end,
+    completed_at = case
+      when progress.completed = false and progress.progress + 1 >= challenge.target_value then now()
+      else progress.completed_at
+    end
   from public.daily_challenges challenge
   where progress.challenge_id = challenge.id
     and progress.user_id = p_user_id
     and challenge.challenge_date = v_today
     and challenge.challenge_type = 'max_remaining_pieces'
-    and p_remaining_pieces <= challenge.target_value
+    and p_remaining_pieces = 3
     and progress.claimed = false;
 
   update public.user_daily_challenge_progress progress
   set
-    progress = greatest(progress.progress, 1),
-    completed = true,
-    completed_at = coalesce(progress.completed_at, now())
+    progress = progress.progress + 1,
+    completed = case when progress.progress + 1 >= challenge.target_value then true else progress.completed end,
+    completed_at = case
+      when progress.completed = false and progress.progress + 1 >= challenge.target_value then now()
+      else progress.completed_at
+    end
   from public.daily_challenges challenge
   where progress.challenge_id = challenge.id
     and progress.user_id = p_user_id
     and challenge.challenge_date = v_today
     and challenge.challenge_type = 'finish_under_time'
     and p_outcome = 'won'
-    and p_duration_ms <= challenge.target_value * 1000
+    and p_duration_ms < 50000
     and progress.claimed = false;
 end;
 $$;

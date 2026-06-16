@@ -69,14 +69,18 @@
 
 .item {
   display: grid;
-  grid-template-columns: 70px minmax(0, 1fr) auto auto;
-  gap: 14px;
+  grid-template-columns: 58px minmax(0, 1fr) minmax(92px, auto) minmax(128px, auto);
+  gap: 12px;
   align-items: center;
-  padding: 16px;
+  padding: 14px;
   border: 2px solid rgba(103, 232, 249, 0.16);
   border-radius: 18px;
   background: linear-gradient(135deg, rgba(5, 8, 22, 0.72), rgba(14, 116, 144, 0.18));
   box-shadow: 5px 5px 0 rgba(2, 6, 23, 0.42);
+}
+
+.globalItem {
+  grid-template-columns: 58px 42px minmax(0, 1fr) minmax(92px, auto) minmax(128px, auto);
 }
 
 .item:first-child {
@@ -85,24 +89,25 @@
 }
 
 .avatar {
-  width: 58px;
-  height: 58px;
-  padding: 5px;
+  width: 38px;
+  height: 38px;
+  padding: 3px;
   border: 2px solid rgba(250, 204, 21, 0.28);
-  border-radius: 16px;
-  background: rgba(2, 6, 23, 0.5);
+  border-radius: 12px;
+  background: rgba(2, 6, 23, 0.58);
   image-rendering: pixelated;
+  object-fit: contain;
 }
 
 .rank {
   display: grid;
   place-items: center;
-  width: 58px;
-  height: 58px;
-  border-radius: 18px;
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
   color: #fef08a;
   background: rgba(2, 6, 23, 0.5);
-  font-size: 1.6rem;
+  font-size: 1.35rem;
   font-weight: 900;
 }
 
@@ -155,13 +160,69 @@
   }
 
   .item {
-    grid-template-columns: 58px 58px 1fr;
+    grid-template-columns: 50px 1fr;
+    align-items: start;
+  }
+
+  .globalItem {
+    grid-template-columns: 50px 42px 1fr;
+  }
+
+  .globalItem .playerInfo {
+    grid-column: 3;
+  }
+
+  .item:not(.globalItem) .playerInfo,
+  .item:not(.globalItem) .scoreBlock,
+  .item:not(.globalItem) .stats {
+    grid-column: 2;
+  }
+
+  .globalItem .scoreBlock,
+  .globalItem .stats {
+    grid-column: 3;
   }
 
   .scoreBlock,
   .stats {
-    grid-column: 3;
     min-width: 0;
     text-align: left;
+  }
+
+  .scoreBlock strong {
+    font-size: 1.55rem;
+  }
+}
+
+@media (max-width: 460px) {
+  .item,
+  .globalItem {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .globalItem {
+    grid-template-columns: 44px 36px 1fr;
+  }
+
+  .rank {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    font-size: 1.15rem;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+  }
+
+  .playerInfo h2 {
+    font-size: 1.08rem;
+  }
+
+  .stats {
+    font-size: 0.82rem;
   }
 }

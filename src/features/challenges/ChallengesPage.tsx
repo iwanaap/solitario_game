@@ -22,15 +22,17 @@ function getChallengeIcon(type: DailyChallengeProgress['type']): string {
 }
 
 function getProgressLabel(challenge: DailyChallengeProgress): string {
+  const progress = `${Math.min(challenge.progress, challenge.targetValue)} / ${challenge.targetValue}`
+
   if (challenge.type === 'max_remaining_pieces') {
-    return challenge.completed ? `Logrado: ${challenge.progress} ficha(s)` : `Meta: ${challenge.targetValue} ficha(s) o menos`
+    return `${progress} partidas con 3 fichas exactas`
   }
 
   if (challenge.type === 'finish_under_time') {
-    return challenge.completed ? 'Tiempo logrado' : `Meta: menos de ${Math.round(challenge.targetValue / 60)} min`
+    return `${progress} partidas bajo 50 segundos`
   }
 
-  return `${Math.min(challenge.progress, challenge.targetValue)} / ${challenge.targetValue}`
+  return progress
 }
 
 export function ChallengesPage() {
@@ -139,11 +141,7 @@ export function ChallengesPage() {
 
             <div className={styles.grid}>
               {challenges.map((challenge) => {
-                const progressPercent = challenge.type === 'play_games'
-                  ? Math.min(100, (challenge.progress / challenge.targetValue) * 100)
-                  : challenge.completed
-                    ? 100
-                    : 0
+                const progressPercent = Math.min(100, (challenge.progress / challenge.targetValue) * 100)
 
                 return (
                   <article key={challenge.challengeId} className={styles.card}>
